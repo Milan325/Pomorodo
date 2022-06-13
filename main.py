@@ -15,6 +15,7 @@ timer = None
 
 
 def reset_timer():
+    """ this function resets timer by configuring clock label and setting repetitions to 0"""
     window.after_cancel(timer)
     global repetitions
     repetitions = 0
@@ -23,6 +24,9 @@ def reset_timer():
 
 
 def start_timer():
+    """this function checks number of repetitions and displays different countdowns depending on repetition number.
+    Every other repetition is a short break, and every 8th repetition is long break. Odd number of repetitions means that work minuts should be counted
+    Every two repetitions is full cycle, so a check mark is added at the bottom of the screen"""
     global repetitions
     global LABEL
     global check
@@ -47,6 +51,7 @@ def start_timer():
 
 
 def count_down(count):
+    """this function configures canvas every 1000 millisecond and displays minutes and seconds left to the end of repetition cycle"""
     count_min = math.floor(count / 60)
     count_sec = count % 60
     if count_sec < 10:
@@ -58,29 +63,30 @@ def count_down(count):
     else:
         start_timer()
 
+ if __name__ == __main__:
+    window = Tk()
+    window.title("Pomorodo timer")
+    window.config(padx=100, pady=50, bg=YELLOW)
 
-window = Tk()
-window.title("Pomorodo timer")
-window.config(padx=100, pady=50, bg=YELLOW)
+    tomato = PhotoImage(file="tomato.png")
 
-tomato = PhotoImage(file="tomato.png")
+    canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
+    canvas.create_image(100, 112, image=tomato)
+    canvas.grid(row=1, column=1)
+    timer_text = canvas.create_text(100, 130, text="00:00", fill="yellow", font=(FONT_NAME, 35, "bold"))
 
-canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
-canvas.create_image(100, 112, image=tomato)
-canvas.grid(row=1, column=1)
-timer_text = canvas.create_text(100, 130, text="00:00", fill="yellow", font=(FONT_NAME, 35, "bold"))
+    LABEL = Label(text="TAJMER", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 44, "bold"))
+    LABEL.grid(row=0, column=1)
 
-LABEL = Label(text="TAJMER", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 44, "bold"))
-LABEL.grid(row=0, column=1)
+    START_BUTTON = Button(text="POČNI", command=start_timer)
+    START_BUTTON.grid(row=2, column=0)
 
-START_BUTTON = Button(text="POČNI", command=start_timer)
-START_BUTTON.grid(row=2, column=0)
+    RESET_BUTTON = Button(text="PONOVI", command=reset_timer)
+    RESET_BUTTON.grid(row=2, column=2)
 
-RESET_BUTTON = Button(text="PONOVI", command=reset_timer)
-RESET_BUTTON.grid(row=2, column=2)
+    check = Label(text=" ", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 20, "bold"))
+    check.grid(row=3, column=1)
 
-check = Label(text=" ", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 20, "bold"))
-check.grid(row=3, column=1)
+ 
 
-
-window.mainloop()
+    window.mainloop()
