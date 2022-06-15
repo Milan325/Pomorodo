@@ -63,7 +63,8 @@ def count_down(count):
     else:
         start_timer()
 
- if __name__ == __main__:
+#game engine and UI   
+if __name__ == "__main__":
     window = Tk()
     window.title("Pomorodo timer")
     window.config(padx=100, pady=50, bg=YELLOW)
